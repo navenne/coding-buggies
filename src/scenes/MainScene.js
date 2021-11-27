@@ -13,15 +13,20 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+        // Add components
         this.add.image(200, 300, "background");
-        this.add.image(200, 590, "floor");
-
+        this.floor = this.physics.add.staticImage(200, 595, "floor");
         this.player = new Player(this, 200, 400, "player");
-
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        this.createCollisions();
     }
 
     update() {
         this.player.update(this.cursors);
+    }
+
+    createCollisions() {
+        this.physics.add.collider(this.player, this.floor);
     }
 }
