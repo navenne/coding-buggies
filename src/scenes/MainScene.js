@@ -18,6 +18,14 @@ export default class MainScene extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 11,
     });
+    this.load.spritesheet("wasp", "assets/wasp.png", {
+      frameWidth: 23,
+      frameHeight: 19,
+    });
+    this.load.spritesheet("moth", "assets/moth.png", {
+      frameWidth: 31,
+      frameHeight: 17,
+    });
   }
 
   create() {
@@ -33,9 +41,10 @@ export default class MainScene extends Phaser.Scene {
 
     this.createGroups();
 
+    this.createCollisions();
+
     this.createEvents();
 
-    this.createCollisions();
   }
 
   update() {
@@ -48,11 +57,16 @@ export default class MainScene extends Phaser.Scene {
     });
   }
 
+  createCollisions() {
+    this.physics.add.collider(this.player, this.floor);
+    this.physics.add.overlap(this.player, this.bugs, this.hitByBug, null, this);
+  }
+
   createEvents() {
     // Continuously drop items
     this.time.addEvent({
       delay: 200,
-      callback: this.dropItem,
+      callback: this.createBug,
       callbackScope: this,
       loop: true,
     });
@@ -61,24 +75,13 @@ export default class MainScene extends Phaser.Scene {
     this.time.addEvent({
       delay: 1000,
       callback: () => {
-        this.score += 1;
+        this.score += 10;
         this.scoreLabel.setLetterSpacing(2);
         this.scoreLabel.text = "SCORE " + this.score;
       },
       callbackScope: this,
       loop: true,
     });
-  }
-
-  createCollisions() {
-    this.physics.add.collider(this.player, this.floor);
-    this.physics.add.overlap(this.player, this.bugs, this.hitByBug, null, this);
-  }
-
-  createBug(x, y) {
-    this.bugs.setVelocityY(200);
-    this.bugs.playAnimation("fly");
-    this.bugs.create(x, y, "butterfly");
   }
 
   hitByBug(player, bug) {
@@ -95,8 +98,9 @@ export default class MainScene extends Phaser.Scene {
     }, 200);
   }
 
-  dropItem() {
+  createBug() {
     let x = Phaser.Math.Between(10, 380);
-    this.createBug(x, 0);
+    this.bugs.setVelocityY(200);
+    this.bugs.create(x, 0);
   }
 }
