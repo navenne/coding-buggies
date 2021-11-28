@@ -11,11 +11,8 @@ export default class Bug extends Phaser.Physics.Arcade.Sprite {
     // Animation
     this.anims.create({
       key: "fly",
-      frames: this.anims.generateFrameNumbers("butterfly", {
-        start: 0,
-        end: 2,
-      }),
-      frameRate: 8,
+      frames: this.anims.generateFrameNumbers("butterfly"),
+      frameRate: 12,
       repeat: -1,
     });
 }

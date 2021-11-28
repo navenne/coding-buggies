@@ -30,6 +30,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       frames: [{ key: "player", frame: 2 }],
       frameRate: 20,
     });
+
   }
 
   // Movement

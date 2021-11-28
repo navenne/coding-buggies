@@ -18,6 +18,7 @@ export default class MainScene extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 11,
     });
+    this.load.bitmapFont("pixelFont", "fonts/pixel.png", "fonts/pixel.xml");
   }
 
   create() {
@@ -26,15 +27,13 @@ export default class MainScene extends Phaser.Scene {
     this.floor = this.physics.add.staticImage(200, 595, "floor");
     this.player = new Player(this, 200, 554, "player");
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.score = 0;
+    this.scoreLabel = this.add.bitmapText(10, 10, "pixelFont", "SCORE ", 16);
+    this.scoreLabel.setLetterSpacing(1);
 
     this.createGroups();
 
-    this.time.addEvent({
-        delay: 200,
-        callback: this.dropItem,
-        callbackScope: this,
-        loop: true,
-    });
+    this.createEvents();
 
     this.createCollisions();
   }
@@ -49,15 +48,37 @@ export default class MainScene extends Phaser.Scene {
     });
   }
 
-  createBug(x, y) {
-    this.bugs.setVelocityY(200);
-    this.bugs.playAnimation("fly");
-    this.bugs.create(x, y, "butterfly");
+  createEvents() {
+    // Continuously drop items
+    this.time.addEvent({
+      delay: 200,
+      callback: this.dropItem,
+      callbackScope: this,
+      loop: true,
+    });
+
+    // Increasing score by 1 every second
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.score += 1;
+        this.scoreLabel.setLetterSpacing(2);
+        this.scoreLabel.text = "SCORE " + this.score;
+      },
+      callbackScope: this,
+      loop: true,
+    });
   }
 
   createCollisions() {
     this.physics.add.collider(this.player, this.floor);
     this.physics.add.overlap(this.player, this.bugs, this.hitByBug, null, this);
+  }
+
+  createBug(x, y) {
+    this.bugs.setVelocityY(200);
+    this.bugs.playAnimation("fly");
+    this.bugs.create(x, y, "butterfly");
   }
 
   hitByBug(player, bug) {
@@ -69,7 +90,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   dropItem() {
-    const x = Phaser.Math.Between(10, 380);
+    let x = Phaser.Math.Between(10, 380);
     this.createBug(x, 0);
   }
 }
