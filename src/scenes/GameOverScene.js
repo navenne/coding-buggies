@@ -10,8 +10,7 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background2", "assets/background-2.png");
-    this.load.image("button", "assets/button.png");
+    this.load.image("restartButton", "assets/restart-button.png");
   }
 
   create() {
@@ -25,16 +24,18 @@ export default class GameOverScene extends Phaser.Scene {
       .setDropShadow(5, 5, "#000", 1);
 
     // Restart game button
-    this.restartButton = this.add.image(195, 350, "button").setInteractive();
+    this.restartButton = this.add
+      .image(195, 350, "restartButton")
+      .setInteractive();
     this.restartButton.on("pointerdown", () => {
-        this.scene.start("MainScene");
-    })
+      this.scene.start("MainScene");
+    });
     this.restartButton.on("pointerover", () => {
-        this.restartButton.setScale(0.80);
-    })
+      this.restartButton.setScale(0.8);
+    });
 
     this.restartButton.on("pointerout", () => {
-        this.restartButton.setScale(1);
-    })
+      this.restartButton.setScale(1);
+    });
   }
 }

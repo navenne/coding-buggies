@@ -18,7 +18,6 @@ export default class MainScene extends Phaser.Scene {
       frameWidth: 16,
       frameHeight: 11,
     });
-    this.load.bitmapFont("pixelFont", "fonts/pixel.png", "fonts/pixel.xml");
   }
 
   create() {
