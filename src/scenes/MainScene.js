@@ -30,6 +30,7 @@ export default class MainScene extends Phaser.Scene {
     this.score = 0;
     this.scoreLabel = this.add.bitmapText(10, 10, "pixelFont", "SCORE ", 16);
     this.scoreLabel.setLetterSpacing(1);
+    this.gameOver = false;
 
     this.createGroups();
 
@@ -82,10 +83,16 @@ export default class MainScene extends Phaser.Scene {
   }
 
   hitByBug(player, bug) {
+    this.player.stress += 1;
     bug.disableBody(true, true);
     player.setTint(0xff0000);
     setTimeout(() => {
-      player.clearTint();
+      if (this.player.stress == 3) {
+        this.gameOver = true;
+        this.scene.start("GameOverScene", this.score);
+      } else {
+        player.clearTint();
+      }
     }, 200);
   }
 

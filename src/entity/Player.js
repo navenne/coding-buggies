@@ -3,6 +3,8 @@ import "phaser";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
+    
+    this.stress = 0;
 
     // Add to scene
     this.scene = scene;
