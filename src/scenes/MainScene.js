@@ -29,6 +29,13 @@ export default class MainScene extends Phaser.Scene {
 
     this.createGroups();
 
+    this.time.addEvent({
+        delay: 200,
+        callback: this.dropItem,
+        callbackScope: this,
+        loop: true,
+    });
+
     this.createCollisions();
   }
 
@@ -40,7 +47,12 @@ export default class MainScene extends Phaser.Scene {
     this.bugs = this.physics.add.group({
       classType: Bug,
     });
-    // this.bugs.create(200, 20, "butterfly");
+  }
+
+  createBug(x, y) {
+    this.bugs.setVelocityY(200);
+    this.bugs.playAnimation("fly");
+    this.bugs.create(x, y, "butterfly");
   }
 
   createCollisions() {
@@ -54,5 +66,10 @@ export default class MainScene extends Phaser.Scene {
     setTimeout(() => {
       player.clearTint();
     }, 200);
+  }
+
+  dropItem() {
+    const x = Phaser.Math.Between(10, 380);
+    this.createBug(x, 0);
   }
 }

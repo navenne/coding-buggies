@@ -15,10 +15,8 @@ export default class Bug extends Phaser.Physics.Arcade.Sprite {
         start: 0,
         end: 2,
       }),
-      frameRate: 7,
+      frameRate: 8,
       repeat: -1,
     });
-
-    this.anims.play("fly", true);
 }
 }
