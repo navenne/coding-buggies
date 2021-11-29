@@ -10,6 +10,7 @@ export default class MainScene extends Phaser.Scene {
   preload() {
     this.load.image("background", "assets/background.png");
     this.load.image("floor", "assets/floor.png");
+    this.load.image("stressOutline", "assets/stress-outline.png");
     this.load.spritesheet("player", "assets/player.png", {
       frameWidth: 37,
       frameHeight: 64,
@@ -35,9 +36,13 @@ export default class MainScene extends Phaser.Scene {
     this.player = new Player(this, 200, 554, "player");
     this.cursors = this.input.keyboard.createCursorKeys();
     this.score = 0;
-    this.scoreLabel = this.add.bitmapText(10, 10, "pixelFont", "SCORE ", 16);
-    this.scoreLabel.setLetterSpacing(1);
+    this.scoreLabel = this.add.bitmapText(10, 10, "pixelFont", "SCORE ", 16).setLetterSpacing(1);
     this.gameOver = false;
+
+    // Stress bar
+    this.stressBar = this.drawStressBarFill(310, 10, 79, 15);
+    this.add.image(348, 17, "stressOutline");
+    this.add.bitmapText(315, 10, "pixelFont", "STRESS ", 16).setLetterSpacing(1);
 
     this.createGroups();
 
@@ -47,6 +52,7 @@ export default class MainScene extends Phaser.Scene {
 
   }
 
+  
   update() {
     this.player.update(this.cursors);
   }
@@ -83,9 +89,10 @@ export default class MainScene extends Phaser.Scene {
       loop: true,
     });
   }
-
+  
   hitByBug(player, bug) {
     this.player.stress += 1;
+    this.setStressBar(this.stressBar, 33*this.player.stress)
     bug.disableBody(true, true);
     player.setTint(0xff0000);
     setTimeout(() => {
@@ -102,5 +109,19 @@ export default class MainScene extends Phaser.Scene {
     let x = Phaser.Math.Between(10, 380);
     this.bugs.setVelocityY(200);
     this.bugs.create(x, 0);
+  }
+
+  drawStressBarFill(x, y, width, height) {
+    const bar = this.add.graphics();
+    bar.fillStyle(0xff0000);
+    bar.fillRect(0, 0, width, height);
+    bar.x = x;
+    bar.y = y;
+    this.setStressBar(bar, 0);
+    return bar;
+  }
+
+  setStressBar(bar, stress) {
+    bar.scaleX = stress/100;
   }
 }

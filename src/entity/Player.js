@@ -4,6 +4,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, key) {
     super(scene, x, y, key);
     
+    // Player's stress
     this.stress = 0;
 
     // Add to scene
