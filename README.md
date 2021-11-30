@@ -26,10 +26,15 @@ by
 /
 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
 
-<h5>OTHER</h5>
+##### OTHER
 <p>Hello! This is Navenne <img src="https://img.itch.zone/aW1nLzc1NTU4MzAuZ2lm/original/q2%2BvKn.gif"></p>
 <p>This is my first game jam! :)</p>
 <p>Also my first game, first time I use Phaser, first time doing pixel art...</p>
 <p>Well, you get the idea.</p>
 <p>Although it is a simple game, I learned a lot while making this project and I enjoyed it so much! I hope you can have fun playing :)</p>
 <p>See you on the next one!</p>
+
+##### LICENSE
+- Do not claim the game or any of its assets as your own.
+- You may use the game and its assets freely but please make sure to give appropiate credit as Navenne and a link to this repo.
+
