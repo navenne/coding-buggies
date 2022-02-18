@@ -96,7 +96,7 @@ export default class MainScene extends Phaser.Scene {
     bug.disableBody(true, true);
     player.setTint(0xff0000);
     setTimeout(() => {
-      if (this.player.stress == 3) {
+      if (this.player.stress >= 3) {
         this.gameOver = true;
         this.scene.start("GameOverScene", this.score);
       } else {
